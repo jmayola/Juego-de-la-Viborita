@@ -12,6 +12,7 @@ function draw() {
   fill(255)
   ellipse(ellX,ellY, 40,40)
   rect(rectX,rectY,60,60)
+  text("hola mundo", 200,200)
   if(ellX < 0 || ellX > 700){
    nz = nz * (-1);
   }
