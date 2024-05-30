@@ -1,11 +1,8 @@
-// 1. Press Play at the top
-// 2. Click on dark grey canvas (before snake hit the wall)
-// 3. Use key arrows to move snake
-
-var s;
-var scl = 20;
-var food;
-
+let s;
+let scl = 20;
+let food;
+let posxS = 10
+let posyS = 10
 function setup() {
   createCanvas(700, 700);
   s = new Snake();
@@ -13,7 +10,15 @@ function setup() {
 	food = createVector(random(width), random(height));
 	pickLocation(); 
 }
-
+class Snake {
+   Snake(){
+    fill(0,255,0)
+    rect(posxS, posyS, scl, scl)
+  }
+    eat() {
+      if()
+    }
+}
 //function to store snake's location on the grid
 //floor calculates the closest int value that is less than or equal to the value of the parameter.
 function pickLocation() {
