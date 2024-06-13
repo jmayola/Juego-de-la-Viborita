@@ -4,19 +4,20 @@ let food;
 let manzanas = 0; // Contador de manzanas
 let posxS = 100;
 let posyS = 100;
-let width = 700;
-let height = 700;
+let width = 500;
+let height = 500;
 let lastMov = 1;
 let gameOver = false; // Variable para controlar si el juego ha terminado
 let arboles = []; // Array para almacenar los árboles
 let GeneArboles = false; // Variable para controlar si los árboles ya fueron generados
 let randomFood = false
 let randomNum = 0
+let Frames = 5
 function setup() {
   createCanvas(width, height);
   s = new Snake();
   randomNum = floor(int(random(1,10)))
-  frameRate(10);
+  frameRate(Frames);
   colocomida(); // Llama a esta función para colocar la comida en una ubicación inicial.
 }
 
@@ -70,6 +71,7 @@ class Snake {
       for (let arbol of arboles) {
         if (head.equals(arbol.pos)) {
           gameOver = true;
+          this.body.pop()
         }
       }
     }
@@ -118,7 +120,7 @@ function colocomida() {
 function lugararbol() {
   var colum = floor(width / scl);
   var filas = floor(height / scl);
-  for (let i = 0; i < 20; i++) { // Cambiamos la cantidad de árboles generados a 30
+  for (let i = 0; i < manzanas; i++) { // Cambiamos la cantidad de árboles generados 
     let posarbol = createVector(floor(random(colum)), floor(random(filas)));
     posarbol.mult(scl);
     arboles.push(new arbol(posarbol.x, posarbol.y));
@@ -129,10 +131,7 @@ function draw() {
   background(51);
 
   // Dibuja el contador de manzanas.
-  fill(255);
-  textSize(15);
-  textAlign(LEFT,LEFT)
-  text("Manzanas: " + manzanas, 10, 40);
+  
   // Dibuja la comida.
   fill(255, 0, 100);
   rect(food.x, food.y, scl, scl);
@@ -155,15 +154,23 @@ function draw() {
     if (dist(s.body[s.body.length - 1].x, s.body[s.body.length - 1].y, food.x, food.y) < 1) {
       s.Grow(); // Hacer que la serpiente crezca.
       manzanas++; // Incrementa el contador de manzanas.
+      GeneArboles = false // añadimos otro arbol
+
       colocomida(); // Colocar la comida en una nueva ubicación.
 
       // Si se han comido al menos 10 manzanas y los árboles aún no han sido generados.
-      if (manzanas >= 10 && !GeneArboles) {
+      if (!GeneArboles) {
+        Frames += 1
         lugararbol();
         GeneArboles = true; // Asegura que los árboles solo se generen una vez.
       }
     }
+  
   }
+  fill(255);
+  textSize(15);
+  textAlign(LEFT,LEFT)
+  text("Manzanas: " + manzanas, 10, 40);
 }
 
 function keyPressed() {
@@ -186,4 +193,4 @@ function keyPressed() {
       break;
   }
 }
-
+document.getElementById("Restart").addEventListener("click",()=>location.reload())
