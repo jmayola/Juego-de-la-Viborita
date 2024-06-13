@@ -10,10 +10,12 @@ let lastMov = 1;
 let gameOver = false; // Variable para controlar si el juego ha terminado
 let arboles = []; // Array para almacenar los árboles
 let GeneArboles = false; // Variable para controlar si los árboles ya fueron generados
-
+let randomFood = false
+let randomNum = 0
 function setup() {
   createCanvas(width, height);
   s = new Snake();
+  randomNum = floor(int(random(1,10)))
   frameRate(10);
   colocomida(); // Llama a esta función para colocar la comida en una ubicación inicial.
 }
@@ -116,7 +118,7 @@ function colocomida() {
 function lugararbol() {
   var colum = floor(width / scl);
   var filas = floor(height / scl);
-  for (let i = 0; i < 30; i++) { // Cambiamos la cantidad de árboles generados a 30
+  for (let i = 0; i < 20; i++) { // Cambiamos la cantidad de árboles generados a 30
     let posarbol = createVector(floor(random(colum)), floor(random(filas)));
     posarbol.mult(scl);
     arboles.push(new arbol(posarbol.x, posarbol.y));
@@ -129,8 +131,8 @@ function draw() {
   // Dibuja el contador de manzanas.
   fill(255);
   textSize(15);
-  text("Manzanas: " + manzanas, 10, 20);
-
+  textAlign(LEFT,LEFT)
+  text("Manzanas: " + manzanas, 10, 40);
   // Dibuja la comida.
   fill(255, 0, 100);
   rect(food.x, food.y, scl, scl);
