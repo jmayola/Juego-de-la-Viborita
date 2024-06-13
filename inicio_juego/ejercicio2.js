@@ -29,7 +29,7 @@ class Snake {
 
   Show() {
     for (let i = 0; i < this.body.length; i++) {
-      fill(0, 255, 0);
+      fill(66, 130, 44);
       rect(this.body[i].x, this.body[i].y, scl, scl);
     }
   }
@@ -89,7 +89,7 @@ class arbol {
   }
 
   Show() {
-    fill(139, 69, 19); // Color marrón para el árbol
+    fill(83, 44, 28); // Color marrón para el árbolr
     rect(this.pos.x, this.pos.y, scl, scl);
   }
 }
@@ -133,7 +133,7 @@ function draw() {
   // Dibuja el contador de manzanas.
   
   // Dibuja la comida.
-  fill(255, 0, 100);
+  fill(152, 29, 29);
   rect(food.x, food.y, scl, scl);
 
   // Dibuja los árboles.
@@ -143,8 +143,8 @@ function draw() {
 
   s.Show();
   if (gameOver) {
-    fill(255, 0, 0);
-    textSize(32);
+    fill(152, 29, 29);
+    textSize(40);
     textAlign(CENTER, CENTER);
     text("GAME OVER", width / 2, height / 2);
   } else {
