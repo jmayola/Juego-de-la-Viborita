@@ -156,7 +156,7 @@ function draw() {
       colocomida(); // Colocar la comida en una nueva ubicación.
 
       // Si se han comido al menos 10 manzanas y los árboles aún no han sido generados.
-      if (manzanas >= 3 && !GeneArboles) {
+      if (manzanas >= 10 && !GeneArboles) {
         lugararbol();
         GeneArboles = true; // Asegura que los árboles solo se generen una vez.
       }
