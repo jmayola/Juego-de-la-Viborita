@@ -12,11 +12,12 @@ let arboles = []; // Array para almacenar los árboles
 let GeneArboles = false; // Variable para controlar si los árboles ya fueron generados
 let randomFood = false
 let randomNum = 0
+let frames = 10
 function setup() {
   createCanvas(width, height);
   s = new Snake();
   randomNum = floor(int(random(1,10)))
-  frameRate(10);
+  frameRate(frames);
   colocomida(); // Llama a esta función para colocar la comida en una ubicación inicial.
 }
 
@@ -155,6 +156,7 @@ function draw() {
     if (dist(s.body[s.body.length - 1].x, s.body[s.body.length - 1].y, food.x, food.y) < 1) {
       s.Grow(); // Hacer que la serpiente crezca.
       manzanas++; // Incrementa el contador de manzanas.
+      frames += 5
       colocomida(); // Colocar la comida en una nueva ubicación.
 
       // Si se han comido al menos 10 manzanas y los árboles aún no han sido generados.

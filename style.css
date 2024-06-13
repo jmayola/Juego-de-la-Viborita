@@ -1,0 +1,45 @@
+*{
+    padding: 0;
+    margin: 0;
+    
+}
+
+body{
+    background: black;
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    place-content: center;
+    
+}
+.fondo1{
+    background-color: rgb(2,7,21);
+}
+.ini{
+    background: rgb(2,7,21);
+    margin: 80px;
+    
+    padding: 10px;
+    border-radius: 10px;
+}
+h1{
+    color: rgb(66,130,44);
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+.st{
+    background-color: rgb(221,184,27);
+    border-radius: 15px;
+    text-align: center;
+    margin:auto;
+    margin-top: 30px;
+    width: 100px;
+    height: 40px;
+    font-size: 20px;
+
+}
+.st a{
+    text-decoration: none;
+    color: black;
+
+}
