@@ -17,8 +17,10 @@ let colum = width / scl;
 let filas = height / scl;
 let foodPos;
 let validPos = false;
-let puntaje = 0 // Variable para el puntaje
+let puntaje = 0; // Variable para el puntaje
 let pausa = false; // Variable para pausa
+let record = 0; // Variable para el récord
+
 //CLASES
 //CLASE VIBORITA
 class Snake {
@@ -83,6 +85,7 @@ class Snake {
     this.body.push(head); // Agrega una nueva posición de la cabeza al cuerpo, haciendo que la serpiente crezca.
   }
 }
+
 // CLASE ARBOL
 class arbol {
   constructor(x, y) {
@@ -90,13 +93,14 @@ class arbol {
   }
 
   Show() {
-    fill(83, 44, 28); // Color marrón para el árbolr
+    fill(83, 44, 28); // Color marrón para el árbol
     rect(this.pos.x, this.pos.y, scl, scl);
   }
 }
+
 //CLASE MANZANAS
 class Apples {
-  constructor() {}
+  constructor() { }
   colocomida() {
     // Intentar encontrar una posición válida que no esté ocupada por un árbol
     while (!validPos) {
@@ -113,6 +117,7 @@ class Apples {
     food = foodPos;
   }
 }
+
 function setup() {
   createCanvas(width, height);
   s = new Snake();
@@ -120,16 +125,18 @@ function setup() {
   frameRate(Frames);
   a = new Apples();
   a.colocomida(); // Llama a esta función para colocar la comida en una ubicación inicial.
+
+  // Obtener el récord guardado
+  if (localStorage.getItem('record')) {
+    record = parseInt(localStorage.getItem('record'));
+  }
 }
 
-
 // Función para colocar la comida en una ubicación aleatoria.
-
 function lugararbol() {
   let colum = floor(width / scl);
   let filas = floor(height / scl);
-  let counter = 0
-  if(manzanas > 10){
+  if (manzanas > 10) {
     let posarbol = createVector(floor(random(colum)), floor(random(filas)));
     posarbol.mult(scl);
     return arboles.push(new arbol(posarbol.x, posarbol.y));
@@ -144,9 +151,14 @@ function lugararbol() {
 
 function draw() {
   background(51);
-          validPos = false;
+  validPos = false;
 
   // Dibuja el contador de manzanas.
+  fill(255);
+  textSize(15);
+  textAlign(LEFT, LEFT);
+  text("Manzanas: " + manzanas, 10, 40);
+  text("Record: " + record, 10, 60); // Dibuja el récord
 
   // Dibuja la comida.
   fill(152, 29, 29);
@@ -158,11 +170,23 @@ function draw() {
   }
 
   s.Show();
+
   if (gameOver) {
-    window.location.href = "gameover.html";
-  } else if (pausa) { //si el juego esta en pausa
-    fill(221,184,27);
+    fill(152, 29, 29);
     textSize(40);
+    textAlign(CENTER, CENTER);
+    text("GAME OVER", width / 2, height / 2);
+    textSize(20);
+    text("Presiona R para reiniciar", width / 2, height / 2 + 50);
+
+    // Actualizar el récord si el puntaje actual es mayor
+    if (manzanas > record) {
+      record = manzanas;
+      localStorage.setItem('record', record);
+    }
+  } else if (pausa) { // Si el juego está en pausa
+    fill(255, 255, 0);
+    textSize(32);
     textAlign(CENTER, CENTER);
     text("PAUSA", width / 2, height / 2);
   } else {
@@ -179,9 +203,11 @@ function draw() {
     ) {
       s.Grow(); // Hacer que la serpiente crezca.
       manzanas++; // Incrementa el contador de manzanas.
-      GeneArboles = false; // añadimos otro arbol
+      GeneArboles = false; // Añadimos otro árbol
 
       a.colocomida(); // Colocar la comida en una nueva ubicación.
+
+      
 
       // Si se han comido al menos 10 manzanas y los árboles aún no han sido generados.
       if (!GeneArboles) {
@@ -191,39 +217,37 @@ function draw() {
       }
     }
   }
-
-  fill(255);
-  textSize(15);
-  textAlign(LEFT, LEFT);
-  text("Manzanas: " + manzanas, 10, 40);
-  //el score va a ir siempre por encima
-} //===> fin del draw()
+}
 
 function keyPressed() {
   if (key === 'P' || key === 'p') {
     pausa = !pausa; // Alterna la pausa
   }
 
+  if (key === 'R' || key === 'r') {
+    location.reload()
+  }
+
   if (!pausa) { // Solo se permite el movimiento si no está en pausa
     switch (keyCode) {
       case UP_ARROW:
       case 87: // Tecla W arriba
-        if (lastMov !== 1) 
+        if (lastMov !== 1)
           lastMov = 0;
         break;
       case DOWN_ARROW:
       case 83: // Tecla S abajo
-        if (lastMov !== 0) 
+        if (lastMov !== 0)
           lastMov = 1;
         break;
       case LEFT_ARROW:
       case 65: // Tecla A izquierda
-        if (lastMov !== 3) 
+        if (lastMov !== 3)
           lastMov = 2;
         break;
       case RIGHT_ARROW:
       case 68: // Tecla D derecha
-        if (lastMov !== 2) 
+        if (lastMov !== 2)
           lastMov = 3;
         break;
       case 37: // Flecha izquierda
@@ -238,13 +262,10 @@ function keyPressed() {
         if (lastMov !== 1)
           lastMov = 0;
         break;
-      case 40: // Flecha abajo
-        if (lastMov !== 0)
-          lastMov = 1;
-        break;
     }
   }
 }
+
 
 document
   .getElementById("Restart")
