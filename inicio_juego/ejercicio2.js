@@ -164,11 +164,6 @@ function draw() {
     fill(221,184,27);
     textSize(40);
     textAlign(CENTER, CENTER);
-    text("GAME OVER", width / 2, height / 2);
-  } else if (pausa) { //si el juego esta en pausa
-    fill(221,184,27);
-    textSize(40);
-    textAlign(CENTER, CENTER);
     text("PAUSA", width / 2, height / 2);
   } else {
     s.Movement(lastMov);
