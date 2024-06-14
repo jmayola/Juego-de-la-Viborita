@@ -177,6 +177,9 @@ function setup() {
   roja.colocomida(); // Llama a esta función para colocar la comida en una ubicación inicial.
   amarilla = new SpecialApples(221,184,27)
 }
+if(localStorage.getItem('record')){
+  record = parseInt(localStorage.getItem('record'))
+}
 
 //LOOP DE P5
 //LOOP DE P5
@@ -219,7 +222,7 @@ function draw() {
     // Actualizar el récord si el puntaje actual es mayor
     if (manzanas > record) {
       record = manzanas;
-      localStorage.setItem('record', record);
+      localStorage.setItem('', record);
     }
   } else if (pausa) { // Si el juego está en pausa
     fill(255, 255, 0);
