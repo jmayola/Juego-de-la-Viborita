@@ -256,7 +256,7 @@ function draw() {
 
   fill(221, 184, 27);
   textSize(15);
-  textAlign(LEFT, LEFT);
+  textAlign(CENTER, CENTER);
   text("Manzanas: " + manzanas + "/" + thresshold, 10, 40);
   text("Record: " + record, 10, 60); // Dibuja el récord
   text("Manzanas Amarillas: " + amarilla.counterVar, 10, 80);
