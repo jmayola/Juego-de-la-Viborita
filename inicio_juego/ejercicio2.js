@@ -17,7 +17,8 @@ let colum = width / scl;
 let filas = height / scl;
 let foodPos;
 let validPos = false;
-
+let puntaje = 0 // Variable para el puntaje
+let pausa = false; // Variable para pausa
 //CLASES
 //CLASE VIBORITA
 class Snake {
@@ -157,11 +158,14 @@ function draw() {
   }
 
   s.Show();
+
   if (gameOver) {
-    fill(152, 29, 29);
+    window.location.href = "gameover.html";
+  } else if (pausa) { //si el juego esta en pausa
+    fill(221,184,27);
     textSize(40);
     textAlign(CENTER, CENTER);
-    text("GAME OVER", width / 2, height / 2);
+    text("PAUSA", width / 2, height / 2);
   } else {
     s.Movement(lastMov);
 
@@ -188,6 +192,7 @@ function draw() {
       }
     }
   }
+
   fill(255);
   textSize(15);
   textAlign(LEFT, LEFT);
@@ -203,27 +208,27 @@ function keyPressed() {
   if (!pausa) { // Solo se permite el movimiento si no está en pausa
     switch (keyCode) {
       case UP_ARROW:
-      case 87: // Tecla W (arriba)
-        if (lastMov !== 1) // Evita que la serpiente se mueva hacia arriba si ya se está moviendo hacia abajo
+      case 87: // Tecla W arriba
+        if (lastMov !== 1) 
           lastMov = 0;
         break;
       case DOWN_ARROW:
-      case 83: // Tecla S (abajo)
-        if (lastMov !== 0) // Evita que la serpiente se mueva hacia abajo si ya se está moviendo hacia arriba
+      case 83: // Tecla S abajo
+        if (lastMov !== 0) 
           lastMov = 1;
         break;
       case LEFT_ARROW:
-      case 65: // Tecla A (izquierda)
-        if (lastMov !== 3) // Evita que la serpiente se mueva hacia la izquierda si ya se está moviendo hacia la derecha
+      case 65: // Tecla A izquierda
+        if (lastMov !== 3) 
           lastMov = 2;
         break;
       case RIGHT_ARROW:
-      case 68: // Tecla D (derecha)
-        if (lastMov !== 2) // Evita que la serpiente se mueva hacia la derecha si ya se está moviendo hacia la izquierda
+      case 68: // Tecla D derecha
+        if (lastMov !== 2) 
           lastMov = 3;
         break;
       case 37: // Flecha izquierda
-        if (lastMov !== 3) 
+        if (lastMov !== 3)
           lastMov = 2;
         break;
       case 39: // Flecha derecha
