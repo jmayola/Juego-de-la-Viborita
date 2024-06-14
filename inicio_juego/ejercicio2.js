@@ -7,6 +7,7 @@ let posyS = 100;
 let width = 500;
 let height = 500;
 let lastMov = 1;
+let thresshold = 35
 let gameOver = false; // Variable para controlar si el juego ha terminado
 let arboles = []; // Array para almacenar los árboles
 let GeneArboles = false; // Variable para controlar si los árboles ya fueron generados
@@ -96,7 +97,6 @@ class arbol {
 }
 //CLASE MANZANAS
 class Apples {
-  constructor() {}
   colocomida() {
     // Intentar encontrar una posición válida que no esté ocupada por un árbol
     while (!validPos) {
@@ -110,20 +110,39 @@ class Apples {
         }
       }
     }
-    food = foodPos;
+    food = foodPos; //se define otra variable para no stackear la memoria
   }
 }
-function setup() {
-  createCanvas(width, height);
-  s = new Snake();
-  randomNum = floor(int(random(1, 10)));
-  frameRate(Frames);
-  a = new Apples();
-  a.colocomida(); // Llama a esta función para colocar la comida en una ubicación inicial.
+class SpecialApples extends Apples{
+  counterVar = 0;
+  counter(){
+    this.counterVar += 1
+  }
+  foodX = 0;
+  posVal = false
+  foodColi(id){
+    if(dist(s.body[s.body.length - 1].x,
+      s.body[s.body.length - 1].y,this.foodX.x,this.foodX.y) < 1){
+        manzanas++
+        thresshold += 5
+        this.counter()
+      }
+  }
+  foodSpawn() {
+    // Intentar encontrar una posición válida que no esté ocupada por un árbol
+    while (!this.posVal) {
+      this.foodX = createVector(floor(random(colum)), floor(random(filas)));
+      this.foodX.mult(scl);
+      this.posVal = true;
+      for (let arbol of arboles) {
+        if (this.foodX.equals(arbol.pos)) {
+          this.posVal = false;
+          break;
+        }
+      }
+    }
+  }
 }
-
-
-// Función para colocar la comida en una ubicación aleatoria.
 
 function lugararbol() {
   let colum = floor(width / scl);
@@ -142,12 +161,39 @@ function lugararbol() {
   }
 }
 
+//INICIO DE P5
+//INICIO DE P5
+//INICIO DE P5
+
+function setup() {
+  createCanvas(width, height);
+  s = new Snake();
+  randomNum = floor(int(random(1, 10)));
+  frameRate(Frames);
+  roja = new Apples();
+  roja.colocomida(); // Llama a esta función para colocar la comida en una ubicación inicial.
+  amarilla = new SpecialApples(221,184,27)
+}
+
+//LOOP DE P5
+//LOOP DE P5
+//LOOP DE P5
+
 function draw() {
+  if(Frames < 20){
+  frameRate(Frames);
+}
   background(51);
-          validPos = false;
-
-  // Dibuja el contador de manzanas.
-
+  if(manzanas > 15 && manzanas % randomNum == 0){
+    fill(221, 184, 27)
+    rect(amarilla.foodX.x,amarilla.foodX.y,scl,scl)
+    amarilla.foodSpawn()
+    amarilla.foodColi()
+  }
+  else if(manzanas >= thresshold){
+    location.href = "./paginas/win.html"
+  }
+  validPos = false; //INICIALIZAMOS SIEMPRE EN FALSO
   // Dibuja la comida.
   fill(152, 29, 29);
   rect(food.x, food.y, scl, scl);
@@ -181,7 +227,7 @@ function draw() {
       manzanas++; // Incrementa el contador de manzanas.
       GeneArboles = false; // añadimos otro arbol
 
-      a.colocomida(); // Colocar la comida en una nueva ubicación.
+      roja.colocomida(); // Colocar la comida en una nueva ubicación.
 
       // Si se han comido al menos 10 manzanas y los árboles aún no han sido generados.
       if (!GeneArboles) {
@@ -195,7 +241,8 @@ function draw() {
   fill(255);
   textSize(15);
   textAlign(LEFT, LEFT);
-  text("Manzanas: " + manzanas, 10, 40);
+  text("Manzanas: " + manzanas + "/" + thresshold, 10, 40);
+  text("Manzanas Amarillas: " + amarilla.counterVar, 10, 80);
   //el score va a ir siempre por encima
 } //===> fin del draw()
 
@@ -245,8 +292,3 @@ function keyPressed() {
     }
   }
 }
-
-document
-  .getElementById("Restart")
-  .addEventListener("click", () => location.reload());
-//reiniciar pagina sobre evento reiniciar.
