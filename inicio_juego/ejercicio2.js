@@ -1,7 +1,7 @@
 let s;
 let scl = 20;
 let food;
-let manzanas = 0; // Contador de manzanas
+let manzanas = 5; // Contador de manzanas
 let posxS = 100;
 let posyS = 100;
 let width = 500;
@@ -13,6 +13,7 @@ let arboles = []; // Array para almacenar los árboles
 let GeneArboles = false; // Variable para controlar si los árboles ya fueron generados
 let randomFood = false;
 let randomNum = 0;
+let randomNum2 = 0;
 let Frames = 5;
 let colum = width / scl;
 let filas = height / scl;
@@ -130,7 +131,9 @@ class SpecialApples extends Apples{
         manzanas++
         thresshold += 5
         this.counter()
+        return true
       }
+      return false
   }
   foodSpawn() {
     // Intentar encontrar una posición válida que no esté ocupada por un árbol
@@ -147,11 +150,23 @@ class SpecialApples extends Apples{
     }
   }
 }
-
+class GreenApple extends SpecialApples {
+  counterTime = 0 
+  speedTime(){
+    if(this.counterTime != 20){
+    frameRate(Frames +5)
+    this.counterTime ++
+  }
+  else{
+    this.counterTime = 0
+    }
+  }
+}
 function lugararbol() {
   let colum = floor(width / scl);
   let filas = floor(height / scl);
-  if (manzanas > 10) {
+  let counter = 0
+  if(manzanas > 7){
     let posarbol = createVector(floor(random(colum)), floor(random(filas)));
     posarbol.mult(scl);
     return arboles.push(new arbol(posarbol.x, posarbol.y));
@@ -163,6 +178,12 @@ function lugararbol() {
     arboles.push(new arbol(posarbol.x, posarbol.y));
   }
 }
+let sonido1
+let sonido2
+function preload(){
+  soundFormats('mp3');
+  //sonido1 = loadSound("moving.mp3")
+}
 
 //INICIO DE P5
 //INICIO DE P5
@@ -172,10 +193,12 @@ function setup() {
   createCanvas(width, height);
   s = new Snake();
   randomNum = floor(int(random(1, 10)));
+  randomNum2 = floor(int(random(1, 10)));
   frameRate(Frames);
   roja = new Apples();
   roja.colocomida(); // Llama a esta función para colocar la comida en una ubicación inicial.
-  amarilla = new SpecialApples(221,184,27)
+  amarilla = new SpecialApples()
+  verde = new GreenApple()
 }
 
 //LOOP DE P5
@@ -183,12 +206,11 @@ function setup() {
 //LOOP DE P5
 
 function draw() {
-  if(Frames < 20){
+  if(Frames < 7){
   frameRate(Frames);
 }
   background(51);
-  validPos = false;
-  if(manzanas > 15 && manzanas % randomNum == 0){
+  if(manzanas > 10 && manzanas % randomNum == 0){
     fill(221, 184, 27)
     rect(amarilla.foodX.x,amarilla.foodX.y,scl,scl)
     amarilla.foodSpawn()
@@ -196,6 +218,15 @@ function draw() {
   }
   else if(manzanas >= thresshold){
     location.href = "./paginas/win.html"
+  }
+  else if(manzanas > 5 && manzanas % randomNum2 == 0){
+    fill(0,179,0)
+    rect(verde.foodX.x,verde.foodX.y,scl,scl)
+    verde.foodSpawn()
+    verde.foodColi()
+    if(verde.foodColi()){
+      verde.speedTime()
+    }
   }
   validPos = false; //INICIALIZAMOS SIEMPRE EN FALSO
   // Dibuja la comida.
@@ -210,12 +241,7 @@ function draw() {
   s.Show();
 
   if (gameOver) {
-    fill(152, 29, 29);
-    textSize(40);
-    textAlign(CENTER, CENTER);
-    text("GAME OVER", width / 2, height / 2);
-    textSize(20);
-
+    window.location.href = "gameover.html";
     // Actualizar el récord si el puntaje actual es mayor
     if (manzanas > record) {
       record = manzanas;
@@ -240,8 +266,8 @@ function draw() {
     ) {
       s.Grow(); // Hacer que la serpiente crezca.
       manzanas++; // Incrementa el contador de manzanas.
-      GeneArboles = false; // Añadimos otro árbol
-
+      GeneArboles = false; // añadimos otro arbol
+      //sonido1.play()
       roja.colocomida(); // Colocar la comida en una nueva ubicación.
 
       
@@ -255,7 +281,7 @@ function draw() {
     }
   }
 
-  fill(255);
+  fill(221, 184, 27);
   textSize(15);
   textAlign(LEFT, LEFT);
   text("Manzanas: " + manzanas + "/" + thresshold, 10, 40);
