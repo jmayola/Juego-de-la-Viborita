@@ -241,17 +241,7 @@ function draw() {
   s.Show();
 
   if (gameOver) {
-<<<<<<< HEAD
     window.location.href = "gameover.html";
-=======
-    fill(152, 29, 29);
-    textSize(40);
-    textAlign(CENTER, CENTER);
-    text("GAME OVER", width / 2, height / 2);
-    textSize(20);
-    location.href = "gameover.html"
-
->>>>>>> 3ff4648 (fixed gameover redirection)
     // Actualizar el récord si el puntaje actual es mayor
     if (manzanas > record) {
       record = manzanas;
