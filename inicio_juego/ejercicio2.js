@@ -183,7 +183,7 @@ function draw() {
   if(Frames < 20){
   frameRate(Frames);
 }
-  background(51);
+  background(2, 7, 21);
   if(manzanas > 15 && manzanas % randomNum == 0){
     fill(221, 184, 27)
     rect(amarilla.foodX.x,amarilla.foodX.y,scl,scl)
@@ -238,7 +238,7 @@ function draw() {
     }
   }
 
-  fill(255);
+  fill(221, 184, 27);
   textSize(15);
   textAlign(LEFT, LEFT);
   text("Manzanas: " + manzanas + "/" + thresshold, 10, 40);
