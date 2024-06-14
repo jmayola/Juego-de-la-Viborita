@@ -17,22 +17,37 @@
       margin: auto;
       height: 100vh;
       width: 100vw;
-      background: #1d1d1d;
+      background: black;
       
     }
+    
     canvas{
-      border-radius: 10px;
+      border: 4px solid rgb(221, 184, 27);
+    }
+
+    .puntaje{
+      color: rgb(221, 184, 27);
+      display: inline-flex;
+      margin-right: 50px;
+      
+    }
+    .puntajealto{
+      color: rgb(221, 184, 27);
+    }
+    .contenedor{
+      display: flex;
+      align-items: center;
+    }
+
+    .contenedor .titulo{
+      color: rgb(66, 130, 44);
+      margin: auto;
     }
   </style>
 </head>
-
 <body>
-  <div class="contendor">
-    <div class="detalles">
-      <span class="puntaje">Puntaje: 0</span>
-      <span class="puntajealto">Puntaje mas alto: 30</span>
-
-    </div>
+  <div class="contenedor">
+    <h1 class="titulo">SNAKE GAME</h1>
   </div>
 </body>
 </html>
