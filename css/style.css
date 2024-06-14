@@ -20,8 +20,8 @@ body{
 /* START */
 
 .ini{
-    height: 350px;
-    width: 350px;
+    height: 450px;
+    width: 400px;
     background: rgb(2,7,21);
     margin: 10px;
     border: 4px solid rgb(221,184,27);
@@ -32,12 +32,15 @@ h1{
     align-items: center;
     text-align: center;
     color: rgb(66,130,44);
+    text-shadow: 2px 2px 5px rgb(49, 95, 34);
     font-family: Arial, Helvetica, sans-serif;
     margin:auto;
     font-size: 40px;
     margin-top: 60px;
     margin-bottom: 150px;
-   
+    animation: animacion-titulo 5s ease forwards;
+    animation-delay: 1ms;
+    animation-iteration-count: infinite;
 }
 .st{
     background-color: rgb(221,184,27);
@@ -73,11 +76,15 @@ h1{
     align-items: center;
     text-align: center;
     color: rgb(152, 29, 29);
+    text-shadow: 2px 2px 5px rgb(116, 28, 28);
     font-family: Arial, Helvetica, sans-serif;
     margin:auto;
     margin-top: 60px;
     font-size: 40px;
     margin-bottom: 150px;
+    animation: animacion-titulo 5s ease forwards;
+    animation-delay: 1ms;
+    animation-iteration-count: infinite;
 }
 
 .rei{
@@ -96,4 +103,36 @@ h1{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 25px; 
     font-weight: bold;
+}
+.perdi{
+    align-items: center;
+    text-align: center;
+    color: rgb(152, 29, 29);
+    text-shadow: 2px 2px 5px rgb(116, 28, 28);
+    font-family: Arial, Helvetica, sans-serif;
+    margin:auto;
+    margin-top: 60px;
+    font-size: 40px;
+    margin-bottom: 150px;
+    animation: animacion-titulo 5s ease forwards;
+    animation-delay: 1ms;
+    animation-iteration-count: infinite;
+}
+
+@keyframes animacion-titulo{
+    0%{
+        font-size: 40px;
+    }
+    25%{
+        font-size: 42px;
+    }
+    50%{
+        font-size: 44px;
+    }
+    75%{
+        font-size: 42px;
+    }
+    100%{
+        font-size: 40px;
+    }
 }
