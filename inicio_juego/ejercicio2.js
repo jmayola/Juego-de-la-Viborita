@@ -13,10 +13,13 @@ let GeneArboles = false; // Variable para controlar si los árboles ya fueron ge
 let randomFood = false
 let randomNum = 0
 let Frames = 5
+let puntaje = 0 // Variable para el puntaje
+let pausa = false; // Variable para pausa
+
 function setup() {
   createCanvas(width, height);
   s = new Snake();
-  randomNum = floor(int(random(1,10)))
+  randomNum = floor(int(random(1, 10)))
   frameRate(Frames);
   colocomida(); // Llama a esta función para colocar la comida en una ubicación inicial.
 }
@@ -130,8 +133,6 @@ function lugararbol() {
 function draw() {
   background(51);
 
-  // Dibuja el contador de manzanas.
-  
   // Dibuja la comida.
   fill(255, 0, 100);
   rect(food.x, food.y, scl, scl);
@@ -142,11 +143,17 @@ function draw() {
   }
 
   s.Show();
+
   if (gameOver) {
     fill(255, 0, 0);
     textSize(32);
     textAlign(CENTER, CENTER);
     text("GAME OVER", width / 2, height / 2);
+  } else if (pausa) { //si el juego esta en pausa
+    fill(255, 255, 0);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    text("PAUSA", width / 2, height / 2);
   } else {
     s.Movement(lastMov);
 
@@ -165,32 +172,39 @@ function draw() {
         GeneArboles = true; // Asegura que los árboles solo se generen una vez.
       }
     }
-  
   }
+
   fill(255);
   textSize(15);
-  textAlign(LEFT,LEFT)
+  textAlign(LEFT, LEFT)
   text("Manzanas: " + manzanas, 10, 40);
 }
 
 function keyPressed() {
-  switch (keyCode) {
-    case UP_ARROW:
-      if (lastMov !== 1) // Evita que la serpiente se mueva hacia arriba si ya se está moviendo hacia abajo
-        lastMov = 0;
-      break;
-    case DOWN_ARROW:
-      if (lastMov !== 0) // Evita que la serpiente se mueva hacia abajo si ya se está moviendo hacia arriba
-        lastMov = 1;
-      break;
-    case LEFT_ARROW:
-      if (lastMov !== 3) // Evita que la serpiente se mueva hacia la izquierda si ya se está moviendo hacia la derecha
-        lastMov = 2;
-      break;
-    case RIGHT_ARROW:
-      if (lastMov !== 2) // Evita que la serpiente se mueva hacia la derecha si ya se está moviendo hacia la izquierda
-        lastMov = 3;
-      break;
+  if (key === 'P' || key === 'p') {
+    pausa = !pausa; // Alterna la pausa
+  }
+
+  if (!pausa) { // Solo se permite el movimiento si no está en pausa
+    switch (keyCode) {
+      case UP_ARROW:
+        if (lastMov !== 1) // Evita que la serpiente se mueva hacia arriba si ya se está moviendo hacia abajo
+          lastMov = 0;
+        break;
+      case DOWN_ARROW:
+        if (lastMov !== 0) // Evita que la serpiente se mueva hacia abajo si ya se está moviendo hacia arriba
+          lastMov = 1;
+        break;
+      case LEFT_ARROW:
+        if (lastMov !== 3) // Evita que la serpiente se mueva hacia la izquierda si ya se está moviendo hacia la derecha
+          lastMov = 2;
+        break;
+      case RIGHT_ARROW:
+        if (lastMov !== 2) // Evita que la serpiente se mueva hacia la derecha si ya se está moviendo hacia la izquierda
+          lastMov = 3;
+        break;
+    }
   }
 }
-document.getElementById("Restart").addEventListener("click",()=>location.reload())
+
+document.getElementById("Restart").addEventListener("click", () => location.reload());
