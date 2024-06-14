@@ -14,32 +14,42 @@ body{
 }
 .fondo1{
     background-color: rgb(2,7,21);
+   
 }
 .ini{
+    height: 350px;
+    width: 350px;
     background: rgb(2,7,21);
-    margin: 80px;
-    
+    margin: 10px;
+    border: 4px solid rgb(221,184,27);
     padding: 10px;
-    border-radius: 10px;
+    
 }
 h1{
+    align-items: center;
+    text-align: center;
     color: rgb(66,130,44);
     font-family: Arial, Helvetica, sans-serif;
-
+    margin:auto;
+    margin-top: 60px;
+    margin-bottom: 150px;
+   
 }
 .st{
     background-color: rgb(221,184,27);
-    border-radius: 15px;
+    border-radius: 10px;
     text-align: center;
+    align-content: center;
     margin:auto;
-    margin-top: 30px;
-    width: 100px;
-    height: 40px;
-    font-size: 20px;
-
+    width: 150px;
+    height: 50px;
+    
 }
 .st a{
     text-decoration: none;
     color: black;
-
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px; 
+    font-weight: bold;
+    
 }
