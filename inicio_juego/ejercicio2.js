@@ -1,7 +1,7 @@
 let s;
 let scl = 20;
 let food;
-let manzanas = 0; // Contador de manzanas
+let manzanas = 9; // Contador de manzanas
 let posxS = 100;
 let posyS = 100;
 let width = 500;
@@ -10,17 +10,16 @@ let lastMov = 1;
 let gameOver = false; // Variable para controlar si el juego ha terminado
 let arboles = []; // Array para almacenar los árboles
 let GeneArboles = false; // Variable para controlar si los árboles ya fueron generados
-let randomFood = false
-let randomNum = 0
-let Frames = 5
-function setup() {
-  createCanvas(width, height);
-  s = new Snake();
-  randomNum = floor(int(random(1,10)))
-  frameRate(Frames);
-  colocomida(); // Llama a esta función para colocar la comida en una ubicación inicial.
-}
+let randomFood = false;
+let randomNum = 0;
+let Frames = 5;
+let colum = width / scl;
+let filas = height / scl;
+let foodPos;
+let validPos = false;
 
+//CLASES
+//CLASE VIBORITA
 class Snake {
   constructor() {
     this.body = []; // Inicializa el cuerpo de la serpiente.
@@ -35,7 +34,8 @@ class Snake {
   }
 
   Movement(dir) {
-    if (!gameOver) { // Asegura que la serpiente no se mueva si el juego ha terminado
+    if (!gameOver) {
+      // Asegura que la serpiente no se mueva si el juego ha terminado
       let head = this.body[this.body.length - 1].copy(); // Copia la posición de la cabeza.
       this.body.shift(); // Elimina el segmento de cola anterior.
 
@@ -71,7 +71,7 @@ class Snake {
       for (let arbol of arboles) {
         if (head.equals(arbol.pos)) {
           gameOver = true;
-          this.body.pop()
+          this.body.pop();
         }
       }
     }
@@ -82,7 +82,7 @@ class Snake {
     this.body.push(head); // Agrega una nueva posición de la cabeza al cuerpo, haciendo que la serpiente crezca.
   }
 }
-
+// CLASE ARBOL
 class arbol {
   constructor(x, y) {
     this.pos = createVector(x, y);
@@ -93,34 +93,48 @@ class arbol {
     rect(this.pos.x, this.pos.y, scl, scl);
   }
 }
-
-// Función para colocar la comida en una ubicación aleatoria.
-function colocomida() {
-  var colum = floor(width / scl);
-  var filas = floor(height / scl);
-  let foodPos;
-  let validPos = false;
-
-  // Intentar encontrar una posición válida que no esté ocupada por un árbol
-  while (!validPos) {
-    foodPos = createVector(floor(random(colum)), floor(random(filas)));
-    foodPos.mult(scl);
-    validPos = true;
-
-    for (let arbol of arboles) {
-      if (foodPos.equals(arbol.pos)) {
-        validPos = false;
-        break;
+//CLASE MANZANAS
+class Apples {
+  constructor() {}
+  colocomida() {
+    // Intentar encontrar una posición válida que no esté ocupada por un árbol
+    while (!validPos) {
+      foodPos = createVector(floor(random(colum)), floor(random(filas)));
+      foodPos.mult(scl);
+      validPos = true;
+      for (let arbol of arboles) {
+        if (foodPos.equals(arbol.pos)) {
+          validPos = false;
+          break;
+        }
       }
     }
+    food = foodPos;
   }
-  food = foodPos;
+}
+function setup() {
+  createCanvas(width, height);
+  s = new Snake();
+  randomNum = floor(int(random(1, 10)));
+  frameRate(Frames);
+  a = new Apples();
+  a.colocomida(); // Llama a esta función para colocar la comida en una ubicación inicial.
 }
 
+
+// Función para colocar la comida en una ubicación aleatoria.
+
 function lugararbol() {
-  var colum = floor(width / scl);
-  var filas = floor(height / scl);
-  for (let i = 0; i < manzanas; i++) { // Cambiamos la cantidad de árboles generados 
+  let colum = floor(width / scl);
+  let filas = floor(height / scl);
+  let counter = 0
+  if(manzanas > 10){
+    let posarbol = createVector(floor(random(colum)), floor(random(filas)));
+    posarbol.mult(scl);
+    return arboles.push(new arbol(posarbol.x, posarbol.y));
+  }
+  for (let i = 0; i < manzanas; i++) {
+    // Cambiamos la cantidad de árboles generados
     let posarbol = createVector(floor(random(colum)), floor(random(filas)));
     posarbol.mult(scl);
     arboles.push(new arbol(posarbol.x, posarbol.y));
@@ -129,9 +143,10 @@ function lugararbol() {
 
 function draw() {
   background(51);
+          validPos = false;
 
   // Dibuja el contador de manzanas.
-  
+
   // Dibuja la comida.
   fill(152, 29, 29);
   rect(food.x, food.y, scl, scl);
@@ -151,46 +166,60 @@ function draw() {
     s.Movement(lastMov);
 
     // Si la serpiente come la comida.
-    if (dist(s.body[s.body.length - 1].x, s.body[s.body.length - 1].y, food.x, food.y) < 1) {
+    if (
+      dist(
+        s.body[s.body.length - 1].x,
+        s.body[s.body.length - 1].y,
+        food.x,
+        food.y
+      ) < 1
+    ) {
       s.Grow(); // Hacer que la serpiente crezca.
       manzanas++; // Incrementa el contador de manzanas.
-      GeneArboles = false // añadimos otro arbol
+      GeneArboles = false; // añadimos otro arbol
 
-      colocomida(); // Colocar la comida en una nueva ubicación.
+      a.colocomida(); // Colocar la comida en una nueva ubicación.
 
       // Si se han comido al menos 10 manzanas y los árboles aún no han sido generados.
       if (!GeneArboles) {
-        Frames += 1
+        Frames += 1;
         lugararbol();
         GeneArboles = true; // Asegura que los árboles solo se generen una vez.
       }
     }
-  
   }
   fill(255);
   textSize(15);
-  textAlign(LEFT,LEFT)
+  textAlign(LEFT, LEFT);
   text("Manzanas: " + manzanas, 10, 40);
-}
+  //el score va a ir siempre por encima
+} //===> fin del draw()
 
 function keyPressed() {
   switch (keyCode) {
     case UP_ARROW:
-      if (lastMov !== 1) // Evita que la serpiente se mueva hacia arriba si ya se está moviendo hacia abajo
+      if (lastMov !== 1)
+        // Evita que la serpiente se mueva hacia arriba si ya se está moviendo hacia abajo
         lastMov = 0;
       break;
     case DOWN_ARROW:
-      if (lastMov !== 0) // Evita que la serpiente se mueva hacia abajo si ya se está moviendo hacia arriba
+      if (lastMov !== 0)
+        // Evita que la serpiente se mueva hacia abajo si ya se está moviendo hacia arriba
         lastMov = 1;
       break;
     case LEFT_ARROW:
-      if (lastMov !== 3) // Evita que la serpiente se mueva hacia la izquierda si ya se está moviendo hacia la derecha
+      if (lastMov !== 3)
+        // Evita que la serpiente se mueva hacia la izquierda si ya se está moviendo hacia la derecha
         lastMov = 2;
       break;
     case RIGHT_ARROW:
-      if (lastMov !== 2) // Evita que la serpiente se mueva hacia la derecha si ya se está moviendo hacia la izquierda
+      if (lastMov !== 2)
+        // Evita que la serpiente se mueva hacia la derecha si ya se está moviendo hacia la izquierda
         lastMov = 3;
       break;
   }
 }
-document.getElementById("Restart").addEventListener("click",()=>location.reload())
+document
+  .getElementById("Restart")
+  .addEventListener("click", () => location.reload());
+//reiniciar pagina sobre evento reiniciar.
