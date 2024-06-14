@@ -16,6 +16,9 @@ body{
     background-color: rgb(2,7,21);
    
 }
+
+/* START */
+
 .ini{
     height: 350px;
     width: 350px;
@@ -25,7 +28,7 @@ body{
     padding: 10px;
     
 }
-h1{
+.start{
     align-items: center;
     text-align: center;
     color: rgb(66,130,44);
@@ -52,4 +55,15 @@ h1{
     font-size: 25px; 
     font-weight: bold;
     
+}
+
+/* GAME OVER */
+
+.final{
+    height: 350px;
+    width: 350px;
+    background: rgb(2,7,21);
+    margin: 10px;
+    border: 4px solid rgb(221,184,27);
+    padding: 10px;
 }
