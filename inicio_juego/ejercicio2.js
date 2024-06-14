@@ -188,23 +188,44 @@ function keyPressed() {
   if (!pausa) { // Solo se permite el movimiento si no está en pausa
     switch (keyCode) {
       case UP_ARROW:
-        if (lastMov !== 1) // Evita que la serpiente se mueva hacia arriba si ya se está moviendo hacia abajo
+      case 87: // Tecla W arriba
+        if (lastMov !== 1) 
           lastMov = 0;
         break;
       case DOWN_ARROW:
-        if (lastMov !== 0) // Evita que la serpiente se mueva hacia abajo si ya se está moviendo hacia arriba
+      case 83: // Tecla S abajo
+        if (lastMov !== 0) 
           lastMov = 1;
         break;
       case LEFT_ARROW:
-        if (lastMov !== 3) // Evita que la serpiente se mueva hacia la izquierda si ya se está moviendo hacia la derecha
+      case 65: // Tecla A izquierda
+        if (lastMov !== 3) 
           lastMov = 2;
         break;
       case RIGHT_ARROW:
-        if (lastMov !== 2) // Evita que la serpiente se mueva hacia la derecha si ya se está moviendo hacia la izquierda
+      case 68: // Tecla D derecha
+        if (lastMov !== 2) 
           lastMov = 3;
+        break;
+      case 37: // Flecha izquierda
+        if (lastMov !== 3)
+          lastMov = 2;
+        break;
+      case 39: // Flecha derecha
+        if (lastMov !== 2)
+          lastMov = 3;
+        break;
+      case 38: // Flecha arriba
+        if (lastMov !== 1)
+          lastMov = 0;
+        break;
+      case 40: // Flecha abajo
+        if (lastMov !== 0)
+          lastMov = 1;
         break;
     }
   }
 }
+
 
 document.getElementById("Restart").addEventListener("click", () => location.reload());
