@@ -1,7 +1,7 @@
 let s;
 let scl = 20;
 let food;
-let manzanas = 9; // Contador de manzanas
+let manzanas = 0; // Contador de manzanas
 let posxS = 100;
 let posyS = 100;
 let width = 500;
