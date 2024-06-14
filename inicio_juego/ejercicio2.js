@@ -177,9 +177,6 @@ function setup() {
   roja.colocomida(); // Llama a esta función para colocar la comida en una ubicación inicial.
   amarilla = new SpecialApples(221,184,27)
 }
-if(localStorage.getItem('record')){
-  record = parseInt(localStorage.getItem('record'))
-}
 
 //LOOP DE P5
 //LOOP DE P5
@@ -212,16 +209,11 @@ function draw() {
   s.Show();
 
   if (gameOver) {
-    fill(152, 29, 29);
-    textSize(40);
-    textAlign(CENTER, CENTER);
-    text("GAME OVER", width / 2, height / 2);
-    textSize(20);
-
+    window.location.href = "gameover.html";
     // Actualizar el récord si el puntaje actual es mayor
     if (manzanas > record) {
       record = manzanas;
-      localStorage.setItem('', record);
+      localStorage.setItem('record', record);
     }
   } else if (pausa) { // Si el juego está en pausa
     fill(255, 255, 0);
@@ -259,7 +251,7 @@ function draw() {
 
   fill(221, 184, 27);
   textSize(15);
-  textAlign(CENTER, CENTER);
+  textAlign(LEFT, LEFT);
   text("Manzanas: " + manzanas + "/" + thresshold, 10, 40);
   text("Record: " + record, 10, 60); // Dibuja el récord
   text("Manzanas Amarillas: " + amarilla.counterVar, 10, 80);
