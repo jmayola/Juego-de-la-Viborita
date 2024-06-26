@@ -287,15 +287,13 @@ function draw() {
   textSize(15);
   textAlign(LEFT, LEFT);
   
-  
-  
-  image(manzanaImg, 10, 2, 30, 30);
+  image(manzanaImg, 10, 470, 20, 20);
   text(": " + manzanas + "/" + thresshold, 10, 40);
 
-  image(amarillaImg, 150, 2, 30, 30);
+  image(amarillaImg, 60, 470, 20, 20);
   text(": " + record, 10, 60); // Dibuja el récord
 
-  image(recordImg, 80, 2, 30, 30);
+  image(recordImg, 120, 470, 20, 20);
   text(": " + amarilla.counterVar, 10, 80);
   //el score va a ir siempre por encima
 } //===> fin del draw()
