@@ -284,17 +284,17 @@ function draw() {
   }
 
   fill(221, 184, 27);
-  textSize(10);
+  textSize(13);
   textAlign(LEFT, LEFT);
   
   image(manzanaImg, 10, 470, 20, 20);
-  text(": " + manzanas + "/" + thresshold, 20, 470);
+  text(": " + manzanas + "/" + thresshold, 30, 485);
 
-  image(amarillaImg, 60, 470, 20, 20);
-  text(": " + record, 10, 60); // Dibuja el récord
+  image(amarillaImg, 70, 470, 20, 20);
+  text(": " + record, 90, 485); // Dibuja el récord
 
-  image(recordImg, 110, 470, 20, 20);
-  text(": " + amarilla.counterVar, 10, 80);
+  image(recordImg, 120, 470, 20, 20);
+  text(": " + amarilla.counterVar, 140, 485);
   //el score va a ir siempre por encima
 } //===> fin del draw()
 
