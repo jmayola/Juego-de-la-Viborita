@@ -286,13 +286,12 @@ function draw() {
   fill(221, 184, 27);
   textSize(15);
   textAlign(LEFT, LEFT);
-
   
-  text(image(manzanaImg, 10, 20, 20, 20) + " " + manzanas + thresshold, 10, 40);
+  text(image(manzanaImg, 10, 2, 30, 30) + " " + manzanas + thresshold, 10, 40);
 
-  text(image(recordImg, 10, 70, 20, 20) + " " + record, 10, 80);
+  text(image(recordImg, 80, 2, 30, 30) + " " + record, 10, 80);
 
-  text(image(amarillaImg, 10, 120, 20, 20) + " " + amarilla.counterVar, 10, 80);
+  text(image(amarillaImg, 150, 2, 30, 30) + " " + amarilla.counterVar, 10, 80);
   //el score va a ir siempre por encima
 } //===> fin del draw()
 
