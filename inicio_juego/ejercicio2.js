@@ -22,6 +22,9 @@ let validPos = false;
 let puntaje = 0; // Variable para el puntaje
 let pausa = false; // Variable para pausa
 let record = 0; // Variable para el récord
+let manzanaImg;
+let recordImg;
+let amarillaImg;
 
 //CLASES
 //CLASE VIBORITA
@@ -183,12 +186,14 @@ let sonido2
 function preload(){
   soundFormats('mp3');
   //sonido1 = loadSound("moving.mp3")
+
+  //imagenes de las manzanas y record
+  manzanaImg = loadImage('img/manzanaImg.png');
+  recordImg = loadImage('img/recordImg.png');
+  amarillaImg = loadImage('img/amarillaImg.png');
 }
 
 //INICIO DE P5
-//INICIO DE P5
-//INICIO DE P5
-
 function setup() {
   createCanvas(width, height);
   s = new Snake();
@@ -202,9 +207,6 @@ function setup() {
 }
 
 //LOOP DE P5
-//LOOP DE P5
-//LOOP DE P5
-
 function draw() {
   if(Frames < 7){
   frameRate(Frames);
@@ -284,9 +286,13 @@ function draw() {
   fill(221, 184, 27);
   textSize(15);
   textAlign(LEFT, LEFT);
-  text("Manzanas: " + manzanas + "/" + thresshold, 10, 40);
-  text("Record: " + record, 10, 60); // Dibuja el récord
-  text("Manzanas Amarillas: " + amarilla.counterVar, 10, 80);
+
+  
+  text(image(manzanaImg, 10, 20, 20, 20) + " " + manzanas + thresshold, 10, 40);
+
+  text(image(recordImg, 10, 70, 20, 20) + " " + record, 10, 80);
+
+  text(image(amarillaImg, 10, 120, 20, 20) + " " + amarilla.counterVar, 10, 80);
   //el score va a ir siempre por encima
 } //===> fin del draw()
 
