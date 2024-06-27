@@ -1,15 +1,17 @@
-let sonido1
-let sonido2
+let timer = 0
+let serpiente
+let manzanaSon
+let musica
 let s;
 let scl = 20;
 let food;
-let manzanas = 5; // Contador de manzanas
+let manzanas = 0; // Contador de manzanas
 let posxS = 100;
 let posyS = 100;
 let width = 500;
 let height = 500;
 let lastMov = 1;
-let thresshold = 35
+let thresshold = 15
 let gameOver = false; // Variable para controlar si el juego ha terminado
 let arboles = []; // Array para almacenar los árboles
 let GeneArboles = false; // Variable para controlar si los árboles ya fueron generados
@@ -133,8 +135,8 @@ class SpecialApples extends Apples{
   foodColi(){
     if(dist(s.body[s.body.length - 1].x,
       s.body[s.body.length - 1].y,this.foodX.x,this.foodX.y) < 1){
-        sonido2.play()
-        manzanas++
+        manzanaSon.play()
+        manzanas += 3
         thresshold += 3
         randomNum = floor(int(random(1, 10)));
         randomNum2 = floor(int(random(1, 10)));
@@ -159,17 +161,21 @@ class SpecialApples extends Apples{
   }
 }
 class GreenApple extends SpecialApples {
-  counterTime = 0 
-  speedTime(){
-    if(this.counterTime != Frames * 4){
+  speedTime(flag){
+    if(flag){
     frameRate(Frames +5)
-    console.log(this.counterTime)
+    }
+    else{
+      frameRate(Frames -5)
     }
   }
-  upgradeTimer(){
-    this.counterTime ++
-  }
 }
+function timeOutAct(){
+  setTimeout(()=>{
+    verde.speedTime(false)
+    },4000)
+}
+
 function lugararbol() {
   let colum = floor(width / scl);
   let filas = floor(height / scl);
@@ -188,15 +194,16 @@ function lugararbol() {
 }
 function preload(){
   soundFormats('mp3');
-  //sonido1 = loadSound("moving.mp3")
+  //serpiente = loadSound("moving.mp3")
 
   //imagenes de las manzanas y record
   manzanaImg = loadImage('img/manzanaImg.png');
   recordImg = loadImage('img/recordImg.png');
   amarillaImg = loadImage('img/amarillaImg.png');
   soundFormats('mp3', 'ogg');
-  sonido1 = loadSound("sound/serpiente")
-  sonido2 = loadSound("sound/manzana")
+  serpiente = loadSound("sound/serpiente")
+  manzanaSon = loadSound("sound/manzana")
+  musica = loadSound("sound/sonido")
 }
 
 //INICIO DE P5
@@ -205,7 +212,8 @@ function setup() {
   s = new Snake();
   randomNum = floor(int(random(1, 10)));
   randomNum2 = floor(int(random(1, 10)));
-  
+  musica.loop()
+  musica.interval = 10
   frameRate(Frames);
   roja = new Apples();
   roja.colocomida(); // Llama a esta función para colocar la comida en una ubicación inicial.
@@ -220,7 +228,7 @@ let seg = 0
 function draw() {
   seg ++ //contamos la cantidad de frames, cada 5 frames es un segundo
   if(seg % 10 == Frames * 10){
-    sonido1.play() //reproducimos sonido de serpiente cada 10 segundos
+    serpiente.play() //reproducimos sonido de serpiente cada 10 segundos
   }
   if(Frames < 7){
   frameRate(Frames);
@@ -242,7 +250,8 @@ function draw() {
     verde.foodSpawn()
     verde.foodColi()
     if(verde.foodColi()){
-      verde.speedTime()
+      verde.speedTime(true)
+      timeOutAct()
     }
   }
   validPos = false; //INICIALIZAMOS SIEMPRE EN FALSO
@@ -283,13 +292,8 @@ function draw() {
       s.Grow(); // Hacer que la serpiente crezca.
       manzanas++; // Incrementa el contador de manzanas.
       GeneArboles = false; // añadimos otro arbol
-      //sonido1.play()
+      //serpiente.play()
       roja.colocomida(); // Colocar la comida en una nueva ubicación.
-
-      if(verde.speedTime){
-        verde.upgradeTimer()
-      }
-      
 
       // Si se han comido al menos 10 manzanas y los árboles aún no han sido generados.
       if (!GeneArboles) {
